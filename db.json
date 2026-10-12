@@ -1681,6 +1681,50 @@
   },
   "customerMessages": [
     {
+      "id": "chat-1791790807574",
+      "customerName": "WhatsApp Client (03308738606)",
+      "company": "Live Storefront Visitor",
+      "email": "03308738606@whatsapp.ecotexinc.com",
+      "phone": "03308738606",
+      "subject": "hy",
+      "status": "New",
+      "isUnread": true,
+      "channel": "Live Web Chat",
+      "lastUpdated": "Just now",
+      "messages": [
+        {
+          "id": "msg-1791790807574",
+          "sender": "customer",
+          "senderName": "WhatsApp Client (03308738606)",
+          "text": "hy",
+          "timestamp": "12:40 PM",
+          "channel": "web"
+        }
+      ]
+    },
+    {
+      "id": "test-thread-1791789798485",
+      "customerName": "E2E Chat Visitor",
+      "email": "visitor@e2e.com",
+      "messages": [
+        {
+          "id": "m-1",
+          "text": "Hello via E2E",
+          "sender": "customer",
+          "timestamp": "12:00"
+        },
+        {
+          "id": "admin-1791789798499",
+          "sender": "admin",
+          "senderName": "EcoTex Support Team",
+          "text": "Admin reply via E2E",
+          "timestamp": "12:23 pm"
+        }
+      ],
+      "isUnread": false,
+      "lastUpdated": "Just now"
+    },
+    {
       "id": "chat-1791786201493",
       "customerName": "WhatsApp Client (03351591331)",
       "company": "Live Storefront Visitor",
