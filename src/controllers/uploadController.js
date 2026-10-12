@@ -6,8 +6,9 @@ import logger from '../utils/logger.js';
 export async function handleUpload(req, res) {
   try {
     const localUploads = config.paths.uploadsDir;
-    const frontendPublicUploads = path.join(config.paths.root, '..', 'ecotex-inc-frontend', 'public', 'uploads');
-    const rootPublicUploads = path.join(config.paths.root, '..', 'public', 'uploads');
+    const frontendDir1 = path.join(config.paths.root, '..', 'frontend', 'public', 'uploads');
+    const frontendDir2 = path.join(config.paths.root, '..', 'ecotex-inc-frontend', 'public', 'uploads');
+    const frontendPublicUploads = fs.existsSync(path.dirname(frontendDir1)) ? frontendDir1 : frontendDir2;
 
     // Ensure upload directories exist
     if (!fs.existsSync(localUploads)) {

@@ -1678,5 +1678,29 @@
     "password": "$2b$10$NFoAr6R4cfQ8GdROkDADlObqt.fup6HVwdd7CPzbWo1xtl2W6JOT.",
     "name": "Operations Director",
     "updatedAt": "2026-10-05T10:04:29.099Z"
-  }
+  },
+  "customerMessages": [
+    {
+      "id": "chat-1791786201493",
+      "customerName": "WhatsApp Client (03351591331)",
+      "company": "Live Storefront Visitor",
+      "email": "03351591331@whatsapp.ecotexinc.com",
+      "phone": "03351591331",
+      "subject": "hy",
+      "status": "New",
+      "isUnread": true,
+      "channel": "Live Web Chat",
+      "lastUpdated": "Just now",
+      "messages": [
+        {
+          "id": "msg-1791786201493",
+          "sender": "customer",
+          "senderName": "WhatsApp Client (03351591331)",
+          "text": "hy",
+          "timestamp": "11:23 AM",
+          "channel": "web"
+        }
+      ]
+    }
+  ]
 }

@@ -939,7 +939,8 @@ export const defaultData = {
     "password": "admin",
     "name": "Operations Director",
     "updatedAt": "2026-10-02T12:53:49.886Z"
-  }
+  },
+  "customerMessages": []
 };
 
 export default defaultData;

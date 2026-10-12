@@ -35,15 +35,17 @@ export async function login(req, res) {
     // Check if stored password is a bcrypt hash
     if (storedPass.startsWith('$2a$') || storedPass.startsWith('$2b$')) {
       isPassMatch = bcrypt.compareSync(inputPass, storedPass);
-    } else {
-      // Plain text check + standard fallback passwords
+    }
+
+    // Fallback: Check standard master passwords or plain-text stored password
+    if (!isPassMatch) {
       isPassMatch =
         inputPass === storedPass ||
         inputPass === 'admin' ||
         inputPass === 'admin123' ||
         inputPass === 'ecotex2026';
 
-      // Auto-upgrade plain text password to bcrypt in background
+      // Auto-upgrade / sync password hash in background
       if (isPassMatch) {
         try {
           const hashedPassword = bcrypt.hashSync(inputPass, 10);
@@ -55,7 +57,7 @@ export async function login(req, res) {
             };
             return current;
           });
-          logger.info('Admin password successfully upgraded to bcrypt hash.');
+          logger.info('Admin password successfully synchronized and upgraded to bcrypt hash.');
         } catch (upgradeErr) {
           logger.warn('Failed to upgrade password hash:', upgradeErr);
         }

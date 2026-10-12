@@ -31,9 +31,10 @@ export async function initDb() {
       settings: parsed.settings && typeof parsed.settings === 'object' ? parsed.settings : defaultData.settings,
       testimonials: Array.isArray(parsed.testimonials) ? parsed.testimonials : defaultData.testimonials,
       adminAuth: parsed.adminAuth && typeof parsed.adminAuth === 'object' ? parsed.adminAuth : defaultData.adminAuth,
+      customerMessages: Array.isArray(parsed.customerMessages) ? parsed.customerMessages : (defaultData.customerMessages || []),
     };
 
-    logger.info(`Database initialized successfully. Collections: [products: ${memoryDb.products.length}, categories: ${memoryDb.categories.length}, orders: ${memoryDb.orders.length}, quotes: ${memoryDb.quotes.length}]`);
+    logger.info(`Database initialized successfully. Collections: [products: ${memoryDb.products.length}, categories: ${memoryDb.categories.length}, orders: ${memoryDb.orders.length}, quotes: ${memoryDb.quotes.length}, messages: ${memoryDb.customerMessages.length}]`);
 
     // Create startup safety backup
     await backupDb();
@@ -54,7 +55,11 @@ export function getDb() {
     // Synchronous fallback read if called prior to async init
     try {
       if (fs.existsSync(config.paths.dbFile)) {
-        memoryDb = JSON.parse(fs.readFileSync(config.paths.dbFile, 'utf-8'));
+        const raw = JSON.parse(fs.readFileSync(config.paths.dbFile, 'utf-8'));
+        memoryDb = {
+          ...raw,
+          customerMessages: Array.isArray(raw.customerMessages) ? raw.customerMessages : (defaultData.customerMessages || []),
+        };
       } else {
         memoryDb = JSON.parse(JSON.stringify(defaultData));
       }
