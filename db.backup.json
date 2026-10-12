@@ -1751,8 +1751,8 @@
       "email": "03308738606@whatsapp.ecotexinc.com",
       "phone": "03308738606",
       "subject": "hy",
-      "status": "New",
-      "isUnread": true,
+      "status": "In Discussion",
+      "isUnread": false,
       "channel": "Live Web Chat",
       "lastUpdated": "Just now",
       "messages": [
@@ -1763,6 +1763,31 @@
           "text": "hy",
           "timestamp": "12:40 PM",
           "channel": "web"
+        },
+        {
+          "id": "admin-1791800313127",
+          "sender": "admin",
+          "senderName": "EcoTex Support Team",
+          "text": "how are u",
+          "timestamp": "03:18 pm"
+        },
+        {
+          "id": "admin-1791801267605",
+          "sender": "admin",
+          "senderName": "EcoTex Support Team",
+          "text": "Thank you for reaching out to EcoTex! We have received your inquiry. One of our dedicated wholesale packaging specialists is reviewing your specs and will share a detailed breakdown shortly.",
+          "timestamp": "03:34 pm",
+          "notifications": {
+            "whatsapp": {
+              "target": "03308738606",
+              "dispatched": true,
+              "url": "https://wa.me/923308738606?text=Thank%20you%20for%20reaching%20out%20to%20EcoTex!%20We%20have%20received%20your%20inquiry.%20One%20of%20our%20dedicated%20wholesale%20packaging%20specialists%20is%20reviewing%20your%20specs%20and%20will%20share%20a%20detailed%20breakdown%20shortly."
+            },
+            "email": {
+              "target": "03308738606@whatsapp.ecotexinc.com",
+              "dispatched": false
+            }
+          }
         }
       ]
     },

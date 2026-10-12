@@ -529,6 +529,55 @@
   ],
   "orders": [
     {
+      "id": "ECX-278345",
+      "buyerName": "Enterprise Test Buyer",
+      "customerName": "Enterprise Test Buyer",
+      "companyName": "Apex Global Retail",
+      "customerCompany": "Apex Global Retail",
+      "email": "",
+      "customerEmail": "",
+      "phone": "",
+      "address": "",
+      "shippingAddress": "",
+      "city": "",
+      "state": "CA",
+      "zip": "",
+      "paymentTerms": "Credit Card / Instant ACH",
+      "subtotal": 500,
+      "shipping": 50,
+      "total": 550,
+      "totalAmount": 550,
+      "status": "In Production",
+      "date": "2026-10-12",
+      "createdAt": "2026-10-12T10:47:49.070Z",
+      "items": [
+        {
+          "productId": "",
+          "productName": "Eco Loop Bag",
+          "name": "Eco Loop Bag",
+          "quantity": 2000,
+          "unitPrice": 0.25,
+          "price": 0.25,
+          "totalPrice": 500,
+          "color": "Default",
+          "customPrint": false
+        }
+      ],
+      "notifications": {
+        "email": {
+          "enabled": false,
+          "dispatchedTo": "orders@ecotexinc.com",
+          "timestamp": "2026-10-12T10:47:49.070Z"
+        },
+        "whatsapp": {
+          "enabled": true,
+          "targetPhone": "+92 332 8784015",
+          "timestamp": "2026-10-12T10:47:49.070Z"
+        }
+      },
+      "updatedAt": "2026-10-12T10:47:49.077Z"
+    },
+    {
       "id": "ECX-520119",
       "buyerName": "Enterprise Test Buyer",
       "customerName": "Enterprise Test Buyer",
@@ -1177,6 +1226,21 @@
   ],
   "quotes": [
     {
+      "id": "RFQ-4164",
+      "name": "Procurement Director",
+      "company": "California Marts",
+      "email": "buyer@calmart.com",
+      "phone": "",
+      "category": "General Inquiries",
+      "volume": "25,000 units",
+      "printing": "2-Color Flexo",
+      "message": "Direct quote request via Ecotex RFQ Engine.",
+      "bagType": "",
+      "status": "New",
+      "date": "2026-10-12",
+      "createdAt": "2026-10-12T10:47:49.082Z"
+    },
+    {
       "id": "RFQ-6350",
       "name": "Procurement Director",
       "company": "California Marts",
@@ -1687,7 +1751,7 @@
         }
       ]
     },
-    "updatedAt": "2026-10-12T07:56:14.650Z",
+    "updatedAt": "2026-10-12T10:47:49.090Z",
     "orderNotifications": {
       "emailEnabled": false,
       "notificationEmail": "orders@ecotexinc.com",
@@ -1751,8 +1815,8 @@
       "email": "03308738606@whatsapp.ecotexinc.com",
       "phone": "03308738606",
       "subject": "hy",
-      "status": "New",
-      "isUnread": true,
+      "status": "In Discussion",
+      "isUnread": false,
       "channel": "Live Web Chat",
       "lastUpdated": "Just now",
       "messages": [
@@ -1763,6 +1827,31 @@
           "text": "hy",
           "timestamp": "12:40 PM",
           "channel": "web"
+        },
+        {
+          "id": "admin-1791800313127",
+          "sender": "admin",
+          "senderName": "EcoTex Support Team",
+          "text": "how are u",
+          "timestamp": "03:18 pm"
+        },
+        {
+          "id": "admin-1791801267605",
+          "sender": "admin",
+          "senderName": "EcoTex Support Team",
+          "text": "Thank you for reaching out to EcoTex! We have received your inquiry. One of our dedicated wholesale packaging specialists is reviewing your specs and will share a detailed breakdown shortly.",
+          "timestamp": "03:34 pm",
+          "notifications": {
+            "whatsapp": {
+              "target": "03308738606",
+              "dispatched": true,
+              "url": "https://wa.me/923308738606?text=Thank%20you%20for%20reaching%20out%20to%20EcoTex!%20We%20have%20received%20your%20inquiry.%20One%20of%20our%20dedicated%20wholesale%20packaging%20specialists%20is%20reviewing%20your%20specs%20and%20will%20share%20a%20detailed%20breakdown%20shortly."
+            },
+            "email": {
+              "target": "03308738606@whatsapp.ecotexinc.com",
+              "dispatched": false
+            }
+          }
         }
       ]
     },
