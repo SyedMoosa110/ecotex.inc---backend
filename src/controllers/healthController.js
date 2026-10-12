@@ -23,7 +23,8 @@ export function getHealth(req, res) {
     },
     database: {
       status: 'connected',
-      type: 'atomic-json-store',
+      provider: config.databaseUrl ? 'Neon PostgreSQL (Cloud)' : 'Local Atomic Store',
+      type: 'PostgreSQL + High-Performance Unified Store',
       records: {
         products: db.products?.length || 0,
         categories: db.categories?.length || 0,

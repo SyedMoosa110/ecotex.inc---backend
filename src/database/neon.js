@@ -153,7 +153,7 @@ export async function saveCollectionToNeon(collectionName, data) {
   if (!p) return;
 
   try {
-    // 1. Update primary collection store
+    // 1. Update primary unified collection store (Immediate atomic write)
     await p.query(
       `INSERT INTO ecotex_store (collection_name, data, updated_at)
        VALUES ($1, $2, NOW())
@@ -162,61 +162,67 @@ export async function saveCollectionToNeon(collectionName, data) {
       [collectionName, JSON.stringify(data)]
     );
 
-    // 2. Sync into individual relational table for direct SQL access
-    if (collectionName === 'products' && Array.isArray(data)) {
-      for (const prod of data) {
-        if (!prod || !prod.id) continue;
-        await p.query(
-          `INSERT INTO products (id, name, category, in_stock, data, updated_at)
-           VALUES ($1, $2, $3, $4, $5, NOW())
-           ON CONFLICT (id)
-           DO UPDATE SET name = $2, category = $3, in_stock = $4, data = $5, updated_at = NOW()`,
-          [prod.id, prod.name || '', prod.category || '', prod.inStock !== false, JSON.stringify(prod)]
-        );
+    // 2. Sync individual relational tables asynchronously in background (non-blocking for ultra-fast API response)
+    (async () => {
+      try {
+        if (collectionName === 'products' && Array.isArray(data)) {
+          for (const prod of data) {
+            if (!prod || !prod.id) continue;
+            await p.query(
+              `INSERT INTO products (id, name, category, in_stock, data, updated_at)
+               VALUES ($1, $2, $3, $4, $5, NOW())
+               ON CONFLICT (id)
+               DO UPDATE SET name = $2, category = $3, in_stock = $4, data = $5, updated_at = NOW()`,
+              [prod.id, prod.name || '', prod.category || '', prod.inStock !== false, JSON.stringify(prod)]
+            );
+          }
+        } else if (collectionName === 'orders' && Array.isArray(data)) {
+          for (const ord of data) {
+            if (!ord || !ord.id) continue;
+            const total = parseFloat(ord.total || ord.pricing?.total || 0) || 0;
+            await p.query(
+              `INSERT INTO orders (id, order_number, customer_name, customer_email, status, total_amount, data, updated_at)
+               VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+               ON CONFLICT (id)
+               DO UPDATE SET order_number = $2, customer_name = $3, customer_email = $4, status = $5, total_amount = $6, data = $7, updated_at = NOW()`,
+              [ord.id, ord.orderNumber || ord.id, ord.customer?.name || ord.customerName || '', ord.customer?.email || ord.customerEmail || '', ord.status || 'Pending', total, JSON.stringify(ord)]
+            );
+          }
+        } else if (collectionName === 'quotes' && Array.isArray(data)) {
+          for (const q of data) {
+            if (!q || !q.id) continue;
+            await p.query(
+              `INSERT INTO quotes (id, contact_name, email, status, data, updated_at)
+               VALUES ($1, $2, $3, $4, $5, NOW())
+               ON CONFLICT (id)
+               DO UPDATE SET contact_name = $2, email = $3, status = $4, data = $5, updated_at = NOW()`,
+              [q.id, q.name || q.contactName || '', q.email || '', q.status || 'Pending', JSON.stringify(q)]
+            );
+          }
+        } else if (collectionName === 'customerMessages' && Array.isArray(data)) {
+          for (const msg of data) {
+            if (!msg || !msg.id) continue;
+            await p.query(
+              `INSERT INTO customer_messages (id, customer_name, email, phone, status, data, updated_at)
+               VALUES ($1, $2, $3, $4, $5, $6, NOW())
+               ON CONFLICT (id)
+               DO UPDATE SET customer_name = $2, email = $3, phone = $4, status = $5, data = $6, updated_at = NOW()`,
+              [msg.id, msg.customerName || '', msg.email || '', msg.phone || '', msg.status || 'New', JSON.stringify(msg)]
+            );
+          }
+        } else if (collectionName === 'settings' && data && typeof data === 'object') {
+          await p.query(
+            `INSERT INTO site_settings (id, data, updated_at)
+             VALUES ('current', $1, NOW())
+             ON CONFLICT (id)
+             DO UPDATE SET data = $1, updated_at = NOW()`,
+            [JSON.stringify(data)]
+          );
+        }
+      } catch (syncErr) {
+        logger.warn(`Background relational table sync error for ${collectionName}:`, syncErr.message || syncErr);
       }
-    } else if (collectionName === 'orders' && Array.isArray(data)) {
-      for (const ord of data) {
-        if (!ord || !ord.id) continue;
-        const total = parseFloat(ord.total || ord.pricing?.total || 0) || 0;
-        await p.query(
-          `INSERT INTO orders (id, order_number, customer_name, customer_email, status, total_amount, data, updated_at)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
-           ON CONFLICT (id)
-           DO UPDATE SET order_number = $2, customer_name = $3, customer_email = $4, status = $5, total_amount = $6, data = $7, updated_at = NOW()`,
-          [ord.id, ord.orderNumber || ord.id, ord.customer?.name || ord.customerName || '', ord.customer?.email || ord.customerEmail || '', ord.status || 'Pending', total, JSON.stringify(ord)]
-        );
-      }
-    } else if (collectionName === 'quotes' && Array.isArray(data)) {
-      for (const q of data) {
-        if (!q || !q.id) continue;
-        await p.query(
-          `INSERT INTO quotes (id, contact_name, email, status, data, updated_at)
-           VALUES ($1, $2, $3, $4, $5, NOW())
-           ON CONFLICT (id)
-           DO UPDATE SET contact_name = $2, email = $3, status = $4, data = $5, updated_at = NOW()`,
-          [q.id, q.name || q.contactName || '', q.email || '', q.status || 'Pending', JSON.stringify(q)]
-        );
-      }
-    } else if (collectionName === 'customerMessages' && Array.isArray(data)) {
-      for (const msg of data) {
-        if (!msg || !msg.id) continue;
-        await p.query(
-          `INSERT INTO customer_messages (id, customer_name, email, phone, status, data, updated_at)
-           VALUES ($1, $2, $3, $4, $5, $6, NOW())
-           ON CONFLICT (id)
-           DO UPDATE SET customer_name = $2, email = $3, phone = $4, status = $5, data = $6, updated_at = NOW()`,
-          [msg.id, msg.customerName || '', msg.email || '', msg.phone || '', msg.status || 'New', JSON.stringify(msg)]
-        );
-      }
-    } else if (collectionName === 'settings' && data && typeof data === 'object') {
-      await p.query(
-        `INSERT INTO site_settings (id, data, updated_at)
-         VALUES ('current', $1, NOW())
-         ON CONFLICT (id)
-         DO UPDATE SET data = $1, updated_at = NOW()`,
-        [JSON.stringify(data)]
-      );
-    }
+    })();
   } catch (err) {
     logger.error(`Error saving collection "${collectionName}" to Neon PostgreSQL:`, err);
   }

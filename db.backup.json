@@ -529,6 +529,104 @@
   ],
   "orders": [
     {
+      "id": "ECX-691844",
+      "zip": "",
+      "city": "",
+      "date": "2026-10-12",
+      "email": "",
+      "items": [
+        {
+          "name": "Eco Loop Bag",
+          "color": "Default",
+          "price": 0.25,
+          "quantity": 2000,
+          "productId": "",
+          "unitPrice": 0.25,
+          "totalPrice": 500,
+          "customPrint": false,
+          "productName": "Eco Loop Bag"
+        }
+      ],
+      "phone": "",
+      "state": "CA",
+      "total": 550,
+      "status": "In Production",
+      "address": "",
+      "shipping": 50,
+      "subtotal": 500,
+      "buyerName": "Enterprise Test Buyer",
+      "createdAt": "2026-10-12T11:10:07.012Z",
+      "updatedAt": "2026-10-12T11:10:08.744Z",
+      "companyName": "Apex Global Retail",
+      "totalAmount": 550,
+      "customerName": "Enterprise Test Buyer",
+      "paymentTerms": "Credit Card / Instant ACH",
+      "customerEmail": "",
+      "notifications": {
+        "email": {
+          "enabled": false,
+          "timestamp": "2026-10-12T11:10:07.012Z",
+          "dispatchedTo": "orders@ecotexinc.com"
+        },
+        "whatsapp": {
+          "enabled": true,
+          "timestamp": "2026-10-12T11:10:07.012Z",
+          "targetPhone": "+92 332 8784015"
+        }
+      },
+      "customerCompany": "Apex Global Retail",
+      "shippingAddress": ""
+    },
+    {
+      "id": "ECX-993588",
+      "zip": "",
+      "city": "",
+      "date": "2026-10-12",
+      "email": "",
+      "items": [
+        {
+          "name": "Eco Loop Bag",
+          "color": "Default",
+          "price": 0.25,
+          "quantity": 2000,
+          "productId": "",
+          "unitPrice": 0.25,
+          "totalPrice": 500,
+          "customPrint": false,
+          "productName": "Eco Loop Bag"
+        }
+      ],
+      "phone": "",
+      "state": "CA",
+      "total": 550,
+      "status": "In Production",
+      "address": "",
+      "shipping": 50,
+      "subtotal": 500,
+      "buyerName": "Enterprise Test Buyer",
+      "createdAt": "2026-10-12T11:07:55.836Z",
+      "updatedAt": "2026-10-12T11:08:07.885Z",
+      "companyName": "Apex Global Retail",
+      "totalAmount": 550,
+      "customerName": "Enterprise Test Buyer",
+      "paymentTerms": "Credit Card / Instant ACH",
+      "customerEmail": "",
+      "notifications": {
+        "email": {
+          "enabled": false,
+          "timestamp": "2026-10-12T11:07:55.837Z",
+          "dispatchedTo": "orders@ecotexinc.com"
+        },
+        "whatsapp": {
+          "enabled": true,
+          "timestamp": "2026-10-12T11:07:55.837Z",
+          "targetPhone": "+92 332 8784015"
+        }
+      },
+      "customerCompany": "Apex Global Retail",
+      "shippingAddress": ""
+    },
+    {
       "id": "ECX-278345",
       "zip": "",
       "city": "",
@@ -1226,6 +1324,36 @@
   ],
   "quotes": [
     {
+      "id": "RFQ-6902",
+      "date": "2026-10-12",
+      "name": "Procurement Director",
+      "email": "buyer@calmart.com",
+      "phone": "",
+      "status": "New",
+      "volume": "25,000 units",
+      "bagType": "",
+      "company": "California Marts",
+      "message": "Direct quote request via Ecotex RFQ Engine.",
+      "category": "General Inquiries",
+      "printing": "2-Color Flexo",
+      "createdAt": "2026-10-12T11:10:11.887Z"
+    },
+    {
+      "id": "RFQ-9002",
+      "date": "2026-10-12",
+      "name": "Procurement Director",
+      "email": "buyer@calmart.com",
+      "phone": "",
+      "status": "New",
+      "volume": "25,000 units",
+      "bagType": "",
+      "company": "California Marts",
+      "message": "Direct quote request via Ecotex RFQ Engine.",
+      "category": "General Inquiries",
+      "printing": "2-Color Flexo",
+      "createdAt": "2026-10-12T11:08:19.977Z"
+    },
+    {
       "id": "RFQ-4164",
       "date": "2026-10-12",
       "name": "Procurement Director",
@@ -1421,7 +1549,7 @@
     "tagline": "Certified Sustainable Wholesale Packaging Direct From Manufacturer",
     "heroTitle": "It's time to pack better.",
     "siteTitle": "Ecotex Inc. | Wholesale Sustainable Packaging & Polypropylene Bags",
-    "updatedAt": "2026-10-12T10:47:49.090Z",
+    "updatedAt": "2026-10-12T11:10:13.613Z",
     "aboutStory": "Founded with a dedication to manufacturing excellence, Ecotex operates state-of-the-art ultrasonic welding and automated flexographic printing facilities in California and Karachi.",
     "aboutTitle": "Engineered For Durability. Designed For Circularity.",
     "esgMetrics": {
