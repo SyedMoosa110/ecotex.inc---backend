@@ -14,6 +14,7 @@ export const config = Object.freeze({
   isProduction: process.env.NODE_ENV === 'production',
   port: parseInt(process.env.PORT || '3001', 10),
   host: process.env.HOST || '0.0.0.0',
+  databaseUrl: process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_W3FynXtmqlc5@ep-sparkling-band-b4621xgb-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require',
   
   jwt: {
     secret: process.env.JWT_SECRET || 'ecotex_default_secret_key_change_me_in_prod',

@@ -3,36 +3,81 @@ import path from 'path';
 import config from '../config/index.js';
 import logger from '../utils/logger.js';
 import defaultData from './defaultData.js';
+import { 
+  initNeonSchema, 
+  loadAllCollectionsFromNeon, 
+  saveAllCollectionsToNeon, 
+  saveCollectionToNeon 
+} from './neon.js';
 
 let memoryDb = null;
 let writeQueue = Promise.resolve();
 
 /**
- * Initializes database from disk or creates default seed
+ * Initializes database from Neon PostgreSQL or disk backup/default seed
  */
 export async function initDb() {
   try {
-    if (!fs.existsSync(config.paths.dbFile)) {
-      logger.info('Database file not found. Seeding initial database from defaults...');
-      memoryDb = JSON.parse(JSON.stringify(defaultData));
-      await writeToDiskAtomic(memoryDb);
-      return memoryDb;
+    let neonLoaded = null;
+
+    // 1. Attempt connection and initialization from Neon PostgreSQL
+    try {
+      if (config.databaseUrl) {
+        logger.info('Connecting to Neon PostgreSQL cloud database...');
+        await initNeonSchema();
+        neonLoaded = await loadAllCollectionsFromNeon();
+        if (neonLoaded && Object.keys(neonLoaded).length > 0) {
+          logger.info('Successfully loaded persistent collections from Neon PostgreSQL.');
+        }
+      }
+    } catch (neonErr) {
+      logger.warn('Neon PostgreSQL connection warning (will fall back to local store if needed):', neonErr.message || neonErr);
     }
 
-    const raw = await fs.promises.readFile(config.paths.dbFile, 'utf-8');
-    const parsed = JSON.parse(raw);
+    if (neonLoaded && Object.keys(neonLoaded).length > 0) {
+      // Validate and structure loaded collections
+      memoryDb = {
+        products: Array.isArray(neonLoaded.products) ? neonLoaded.products : defaultData.products,
+        categories: Array.isArray(neonLoaded.categories) ? neonLoaded.categories : defaultData.categories,
+        orders: Array.isArray(neonLoaded.orders) ? neonLoaded.orders : defaultData.orders,
+        quotes: Array.isArray(neonLoaded.quotes) ? neonLoaded.quotes : defaultData.quotes,
+        settings: neonLoaded.settings && typeof neonLoaded.settings === 'object' ? neonLoaded.settings : defaultData.settings,
+        testimonials: Array.isArray(neonLoaded.testimonials) ? neonLoaded.testimonials : defaultData.testimonials,
+        adminAuth: neonLoaded.adminAuth && typeof neonLoaded.adminAuth === 'object' ? neonLoaded.adminAuth : defaultData.adminAuth,
+        customerMessages: Array.isArray(neonLoaded.customerMessages) ? neonLoaded.customerMessages : (defaultData.customerMessages || []),
+      };
 
-    // Validate essential collections
-    memoryDb = {
-      products: Array.isArray(parsed.products) ? parsed.products : defaultData.products,
-      categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
-      orders: Array.isArray(parsed.orders) ? parsed.orders : defaultData.orders,
-      quotes: Array.isArray(parsed.quotes) ? parsed.quotes : defaultData.quotes,
-      settings: parsed.settings && typeof parsed.settings === 'object' ? parsed.settings : defaultData.settings,
-      testimonials: Array.isArray(parsed.testimonials) ? parsed.testimonials : defaultData.testimonials,
-      adminAuth: parsed.adminAuth && typeof parsed.adminAuth === 'object' ? parsed.adminAuth : defaultData.adminAuth,
-      customerMessages: Array.isArray(parsed.customerMessages) ? parsed.customerMessages : (defaultData.customerMessages || []),
-    };
+      // Keep local disk mirror synchronized
+      await writeToDiskAtomic(memoryDb).catch(() => {});
+    } else {
+      // Fallback: Read from local disk or defaultData
+      if (!fs.existsSync(config.paths.dbFile)) {
+        logger.info('Database file not found. Seeding initial database from defaults...');
+        memoryDb = JSON.parse(JSON.stringify(defaultData));
+      } else {
+        const raw = await fs.promises.readFile(config.paths.dbFile, 'utf-8');
+        const parsed = JSON.parse(raw);
+        memoryDb = {
+          products: Array.isArray(parsed.products) ? parsed.products : defaultData.products,
+          categories: Array.isArray(parsed.categories) ? parsed.categories : defaultData.categories,
+          orders: Array.isArray(parsed.orders) ? parsed.orders : defaultData.orders,
+          quotes: Array.isArray(parsed.quotes) ? parsed.quotes : defaultData.quotes,
+          settings: parsed.settings && typeof parsed.settings === 'object' ? parsed.settings : defaultData.settings,
+          testimonials: Array.isArray(parsed.testimonials) ? parsed.testimonials : defaultData.testimonials,
+          adminAuth: parsed.adminAuth && typeof parsed.adminAuth === 'object' ? parsed.adminAuth : defaultData.adminAuth,
+          customerMessages: Array.isArray(parsed.customerMessages) ? parsed.customerMessages : (defaultData.customerMessages || []),
+        };
+      }
+
+      await writeToDiskAtomic(memoryDb);
+
+      // Seed to Neon PostgreSQL if connection available
+      if (config.databaseUrl) {
+        saveAllCollectionsToNeon(memoryDb).catch((err) => {
+          logger.warn('Could not seed initial collections to Neon:', err.message || err);
+        });
+      }
+    }
 
     logger.info(`Database initialized successfully. Collections: [products: ${memoryDb.products.length}, categories: ${memoryDb.categories.length}, orders: ${memoryDb.orders.length}, quotes: ${memoryDb.quotes.length}, messages: ${memoryDb.customerMessages.length}]`);
 
@@ -40,7 +85,7 @@ export async function initDb() {
     await backupDb();
     return memoryDb;
   } catch (err) {
-    logger.error('Failed to parse database file, falling back to default seed:', err);
+    logger.error('Failed to initialize database, falling back to default seed:', err);
     memoryDb = JSON.parse(JSON.stringify(defaultData));
     await writeToDiskAtomic(memoryDb);
     return memoryDb;
@@ -107,6 +152,11 @@ export function saveDb(newData) {
   writeQueue = writeQueue
     .then(async () => {
       await writeToDiskAtomic(memoryDb);
+      if (config.databaseUrl) {
+        await saveAllCollectionsToNeon(newData).catch((err) => {
+          logger.warn('Failed to sync changes to Neon PostgreSQL:', err.message || err);
+        });
+      }
     })
     .catch((err) => {
       logger.error('Write queue error:', err);
@@ -128,6 +178,11 @@ export async function updateDb(updater) {
           memoryDb = updated;
         }
         await writeToDiskAtomic(memoryDb);
+        if (config.databaseUrl) {
+          await saveAllCollectionsToNeon(memoryDb).catch((err) => {
+            logger.warn('Failed to sync update to Neon PostgreSQL:', err.message || err);
+          });
+        }
         resolve(memoryDb);
       })
       .catch((err) => {
