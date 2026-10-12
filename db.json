@@ -1,6 +1,66 @@
 {
   "products": [
     {
+      "id": "prod-1791786437631",
+      "name": "shahu bondu",
+      "category": "non-woven",
+      "categoryLabel": "Non-Woven Totes",
+      "subtitle": "Commercial Wholesale Series",
+      "pricePerUnit": 0.25,
+      "moq": 1000,
+      "gsm": 80,
+      "dimensions": "12\"W x 14\"H x 4\"D",
+      "material": "Virgin Non-Woven Polypropylene",
+      "capacity": "Up to 25 lbs",
+      "badge": "Eco Choice",
+      "image": "/uploads/911fc0af-0992-4d4f-a82c-5d4a24-1791786417111-iap80.jpg",
+      "inStock": true,
+      "description": "High tensile enterprise carrier bag manufactured for supermarkets, boutique retail, and trade exhibitions.",
+      "availableColors": [
+        {
+          "name": "Eco Green",
+          "hex": "#86C59E"
+        },
+        {
+          "name": "Pure White",
+          "hex": "#FFFFFF"
+        },
+        {
+          "name": "Deep Slate",
+          "hex": "#0f172a"
+        }
+      ],
+      "volumeTiers": [
+        {
+          "minQty": 1000,
+          "price": 0.25
+        },
+        {
+          "minQty": 5000,
+          "price": 0.23
+        },
+        {
+          "minQty": 10000,
+          "price": 0.2
+        }
+      ],
+      "features": [
+        "Ultrasonic welded stress-tested seams",
+        "Tear-resistant reinforced handles",
+        "Certified non-toxic eco inks",
+        "100% Recyclable polypropylene"
+      ],
+      "certifications": [
+        "GRS Certified",
+        "100% Recyclable",
+        "FDA Compliant"
+      ],
+      "leadTime": "2-4 Business Days",
+      "bestFor": "Supermarkets, Retail & Events",
+      "ecoImpact": "Displaces up to 250 single-use plastic carrier bags per unit lifetime.",
+      "createdAt": "2026-10-12T06:27:17.644Z"
+    },
+    {
       "id": "prod-1791183909856",
       "name": "Jawwad Kaana",
       "category": "slider",
@@ -1618,5 +1678,29 @@
     "password": "$2b$10$NFoAr6R4cfQ8GdROkDADlObqt.fup6HVwdd7CPzbWo1xtl2W6JOT.",
     "name": "Operations Director",
     "updatedAt": "2026-10-05T10:04:29.099Z"
-  }
+  },
+  "customerMessages": [
+    {
+      "id": "chat-1791786201493",
+      "customerName": "WhatsApp Client (03351591331)",
+      "company": "Live Storefront Visitor",
+      "email": "03351591331@whatsapp.ecotexinc.com",
+      "phone": "03351591331",
+      "subject": "hy",
+      "status": "New",
+      "isUnread": true,
+      "channel": "Live Web Chat",
+      "lastUpdated": "Just now",
+      "messages": [
+        {
+          "id": "msg-1791786201493",
+          "sender": "customer",
+          "senderName": "WhatsApp Client (03351591331)",
+          "text": "hy",
+          "timestamp": "11:23 AM",
+          "channel": "web"
+        }
+      ]
+    }
+  ]
 }

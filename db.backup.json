@@ -469,6 +469,55 @@
   ],
   "orders": [
     {
+      "id": "ECX-353321",
+      "buyerName": "Enterprise Test Buyer",
+      "customerName": "Enterprise Test Buyer",
+      "companyName": "Apex Global Retail",
+      "customerCompany": "Apex Global Retail",
+      "email": "",
+      "customerEmail": "",
+      "phone": "",
+      "address": "",
+      "shippingAddress": "",
+      "city": "",
+      "state": "CA",
+      "zip": "",
+      "paymentTerms": "Credit Card / Instant ACH",
+      "subtotal": 500,
+      "shipping": 50,
+      "total": 550,
+      "totalAmount": 550,
+      "status": "In Production",
+      "date": "2026-10-12",
+      "createdAt": "2026-10-12T05:24:31.423Z",
+      "items": [
+        {
+          "productId": "",
+          "productName": "Eco Loop Bag",
+          "name": "Eco Loop Bag",
+          "quantity": 2000,
+          "unitPrice": 0.25,
+          "price": 0.25,
+          "totalPrice": 500,
+          "color": "Default",
+          "customPrint": false
+        }
+      ],
+      "notifications": {
+        "email": {
+          "enabled": false,
+          "dispatchedTo": "orders@ecotexinc.com",
+          "timestamp": "2026-10-12T05:24:31.423Z"
+        },
+        "whatsapp": {
+          "enabled": true,
+          "targetPhone": "+92 332 8784015",
+          "timestamp": "2026-10-12T05:24:31.423Z"
+        }
+      },
+      "updatedAt": "2026-10-12T05:24:31.432Z"
+    },
+    {
       "id": "ECX-543284",
       "buyerName": "Enterprise Test Buyer",
       "customerName": "Enterprise Test Buyer",
@@ -1019,6 +1068,21 @@
   ],
   "quotes": [
     {
+      "id": "RFQ-2045",
+      "name": "Procurement Director",
+      "company": "California Marts",
+      "email": "buyer@calmart.com",
+      "phone": "",
+      "category": "General Inquiries",
+      "volume": "25,000 units",
+      "printing": "2-Color Flexo",
+      "message": "Direct quote request via Ecotex RFQ Engine.",
+      "bagType": "",
+      "status": "New",
+      "date": "2026-10-12",
+      "createdAt": "2026-10-12T05:24:31.445Z"
+    },
+    {
       "id": "RFQ-3993",
       "name": "Procurement Director",
       "company": "California Marts",
@@ -1499,7 +1563,7 @@
         }
       ]
     },
-    "updatedAt": "2026-10-12T05:21:29.081Z",
+    "updatedAt": "2026-10-12T05:24:31.456Z",
     "orderNotifications": {
       "emailEnabled": false,
       "notificationEmail": "orders@ecotexinc.com",
