@@ -529,6 +529,55 @@
   ],
   "orders": [
     {
+      "id": "ECX-520119",
+      "buyerName": "Enterprise Test Buyer",
+      "customerName": "Enterprise Test Buyer",
+      "companyName": "Apex Global Retail",
+      "customerCompany": "Apex Global Retail",
+      "email": "",
+      "customerEmail": "",
+      "phone": "",
+      "address": "",
+      "shippingAddress": "",
+      "city": "",
+      "state": "CA",
+      "zip": "",
+      "paymentTerms": "Credit Card / Instant ACH",
+      "subtotal": 500,
+      "shipping": 50,
+      "total": 550,
+      "totalAmount": 550,
+      "status": "In Production",
+      "date": "2026-10-12",
+      "createdAt": "2026-10-12T07:56:14.622Z",
+      "items": [
+        {
+          "productId": "",
+          "productName": "Eco Loop Bag",
+          "name": "Eco Loop Bag",
+          "quantity": 2000,
+          "unitPrice": 0.25,
+          "price": 0.25,
+          "totalPrice": 500,
+          "color": "Default",
+          "customPrint": false
+        }
+      ],
+      "notifications": {
+        "email": {
+          "enabled": false,
+          "dispatchedTo": "orders@ecotexinc.com",
+          "timestamp": "2026-10-12T07:56:14.622Z"
+        },
+        "whatsapp": {
+          "enabled": true,
+          "targetPhone": "+92 332 8784015",
+          "timestamp": "2026-10-12T07:56:14.622Z"
+        }
+      },
+      "updatedAt": "2026-10-12T07:56:14.629Z"
+    },
+    {
       "id": "ECX-353321",
       "buyerName": "Enterprise Test Buyer",
       "customerName": "Enterprise Test Buyer",
@@ -1128,6 +1177,21 @@
   ],
   "quotes": [
     {
+      "id": "RFQ-6350",
+      "name": "Procurement Director",
+      "company": "California Marts",
+      "email": "buyer@calmart.com",
+      "phone": "",
+      "category": "General Inquiries",
+      "volume": "25,000 units",
+      "printing": "2-Color Flexo",
+      "message": "Direct quote request via Ecotex RFQ Engine.",
+      "bagType": "",
+      "status": "New",
+      "date": "2026-10-12",
+      "createdAt": "2026-10-12T07:56:14.640Z"
+    },
+    {
       "id": "RFQ-2045",
       "name": "Procurement Director",
       "company": "California Marts",
@@ -1623,7 +1687,7 @@
         }
       ]
     },
-    "updatedAt": "2026-10-12T05:24:31.456Z",
+    "updatedAt": "2026-10-12T07:56:14.650Z",
     "orderNotifications": {
       "emailEnabled": false,
       "notificationEmail": "orders@ecotexinc.com",
@@ -1675,11 +1739,55 @@
   ],
   "adminAuth": {
     "email": "admin@ecotexinc.com",
-    "password": "$2b$10$NFoAr6R4cfQ8GdROkDADlObqt.fup6HVwdd7CPzbWo1xtl2W6JOT.",
+    "password": "$2b$10$ZgVI/y.1KZy1plDRa6wcDu3WL3Wtih29oJ8I0XLGhwF3fFf3bxFLu",
     "name": "Operations Director",
-    "updatedAt": "2026-10-05T10:04:29.099Z"
+    "updatedAt": "2026-10-12T07:56:14.569Z"
   },
   "customerMessages": [
+    {
+      "id": "chat-1791790807574",
+      "customerName": "WhatsApp Client (03308738606)",
+      "company": "Live Storefront Visitor",
+      "email": "03308738606@whatsapp.ecotexinc.com",
+      "phone": "03308738606",
+      "subject": "hy",
+      "status": "New",
+      "isUnread": true,
+      "channel": "Live Web Chat",
+      "lastUpdated": "Just now",
+      "messages": [
+        {
+          "id": "msg-1791790807574",
+          "sender": "customer",
+          "senderName": "WhatsApp Client (03308738606)",
+          "text": "hy",
+          "timestamp": "12:40 PM",
+          "channel": "web"
+        }
+      ]
+    },
+    {
+      "id": "test-thread-1791789798485",
+      "customerName": "E2E Chat Visitor",
+      "email": "visitor@e2e.com",
+      "messages": [
+        {
+          "id": "m-1",
+          "text": "Hello via E2E",
+          "sender": "customer",
+          "timestamp": "12:00"
+        },
+        {
+          "id": "admin-1791789798499",
+          "sender": "admin",
+          "senderName": "EcoTex Support Team",
+          "text": "Admin reply via E2E",
+          "timestamp": "12:23 pm"
+        }
+      ],
+      "isUnread": false,
+      "lastUpdated": "Just now"
+    },
     {
       "id": "chat-1791786201493",
       "customerName": "WhatsApp Client (03351591331)",
