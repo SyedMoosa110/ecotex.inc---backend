@@ -43,9 +43,11 @@ app.use(express.urlencoded({ extended: true, limit: `${config.upload.maxSizeMb}m
 app.use(generalLimiter);
 
 // Serve uploads statically
-if (!fs.existsSync(config.paths.uploadsDir)) {
-  fs.mkdirSync(config.paths.uploadsDir, { recursive: true });
-}
+try {
+  if (!fs.existsSync(config.paths.uploadsDir)) {
+    fs.mkdirSync(config.paths.uploadsDir, { recursive: true });
+  }
+} catch (_) {}
 app.use('/uploads', express.static(config.paths.uploadsDir));
 
 // Fallback upload paths

@@ -34,9 +34,9 @@ export const config = Object.freeze({
 
   paths: {
     root: rootBackendDir,
-    dbFile: path.join(rootBackendDir, 'db.json'),
-    dbBackup: path.join(rootBackendDir, 'db.backup.json'),
-    uploadsDir: path.join(rootBackendDir, process.env.UPLOAD_DIRECTORY || 'uploads'),
+    dbFile: process.env.VERCEL ? path.join('/tmp', 'db.json') : path.join(rootBackendDir, 'db.json'),
+    dbBackup: process.env.VERCEL ? path.join('/tmp', 'db.backup.json') : path.join(rootBackendDir, 'db.backup.json'),
+    uploadsDir: process.env.VERCEL ? path.join('/tmp', process.env.UPLOAD_DIRECTORY || 'uploads') : path.join(rootBackendDir, process.env.UPLOAD_DIRECTORY || 'uploads'),
     frontendDist: fs.existsSync(path.resolve(rootBackendDir, '..', 'frontend', 'dist'))
       ? path.resolve(rootBackendDir, '..', 'frontend', 'dist')
       : path.resolve(rootBackendDir, '..', 'ecotex-inc-frontend', 'dist'),

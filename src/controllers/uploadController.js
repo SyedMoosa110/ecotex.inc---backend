@@ -10,13 +10,15 @@ export async function handleUpload(req, res) {
     const frontendDir2 = path.join(config.paths.root, '..', 'ecotex-inc-frontend', 'public', 'uploads');
     const frontendPublicUploads = fs.existsSync(path.dirname(frontendDir1)) ? frontendDir1 : frontendDir2;
 
-    // Ensure upload directories exist
-    if (!fs.existsSync(localUploads)) {
-      fs.mkdirSync(localUploads, { recursive: true });
-    }
-    if (fs.existsSync(path.dirname(frontendPublicUploads)) && !fs.existsSync(frontendPublicUploads)) {
-      fs.mkdirSync(frontendPublicUploads, { recursive: true });
-    }
+    // Ensure upload directories exist safely
+    try {
+      if (!fs.existsSync(localUploads)) {
+        fs.mkdirSync(localUploads, { recursive: true });
+      }
+      if (fs.existsSync(path.dirname(frontendPublicUploads)) && !fs.existsSync(frontendPublicUploads)) {
+        fs.mkdirSync(frontendPublicUploads, { recursive: true });
+      }
+    } catch (_) {}
 
     let buffer = null;
     let ext = '.png';

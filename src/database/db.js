@@ -51,11 +51,15 @@ export async function initDb() {
       await writeToDiskAtomic(memoryDb).catch(() => {});
     } else {
       // Fallback: Read from local disk or defaultData
-      if (!fs.existsSync(config.paths.dbFile)) {
+      const sourceDbFile = fs.existsSync(config.paths.dbFile)
+        ? config.paths.dbFile
+        : (fs.existsSync(path.join(config.paths.root, 'db.json')) ? path.join(config.paths.root, 'db.json') : null);
+
+      if (!sourceDbFile) {
         logger.info('Database file not found. Seeding initial database from defaults...');
         memoryDb = JSON.parse(JSON.stringify(defaultData));
       } else {
-        const raw = await fs.promises.readFile(config.paths.dbFile, 'utf-8');
+        const raw = await fs.promises.readFile(sourceDbFile, 'utf-8');
         const parsed = JSON.parse(raw);
         memoryDb = {
           products: Array.isArray(parsed.products) ? parsed.products : defaultData.products,
@@ -69,7 +73,7 @@ export async function initDb() {
         };
       }
 
-      await writeToDiskAtomic(memoryDb);
+      await writeToDiskAtomic(memoryDb).catch(() => {});
 
       // Seed to Neon PostgreSQL if connection available
       if (config.databaseUrl) {
@@ -99,8 +103,12 @@ export function getDb() {
   if (!memoryDb) {
     // Synchronous fallback read if called prior to async init
     try {
-      if (fs.existsSync(config.paths.dbFile)) {
-        const raw = JSON.parse(fs.readFileSync(config.paths.dbFile, 'utf-8'));
+      const sourceDbFile = fs.existsSync(config.paths.dbFile)
+        ? config.paths.dbFile
+        : (fs.existsSync(path.join(config.paths.root, 'db.json')) ? path.join(config.paths.root, 'db.json') : null);
+
+      if (sourceDbFile) {
+        const raw = JSON.parse(fs.readFileSync(sourceDbFile, 'utf-8'));
         memoryDb = {
           ...raw,
           customerMessages: Array.isArray(raw.customerMessages) ? raw.customerMessages : (defaultData.customerMessages || []),
@@ -133,13 +141,13 @@ async function writeToDiskAtomic(data) {
     }
     return true;
   } catch (err) {
-    logger.error('Error writing database to disk:', err);
+    logger.warn('Disk write warning (ephemeral/read-only environment):', err.message || err);
     try {
       if (fs.existsSync(tempPath)) {
         await fs.promises.unlink(tempPath);
       }
     } catch (_) {}
-    throw err;
+    return false;
   }
 }
 
